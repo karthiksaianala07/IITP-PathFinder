@@ -2,8 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import { supabase } from './supabaseClient.js';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
+
+// Recreate __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
@@ -124,6 +130,14 @@ app.get('/api/route', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// Serve frontend static files in Production
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// SPA Wildcard fallback to let React Router (if any) or basic index handle direct URL access
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 app.listen(PORT, () => {
