@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useMapContext } from '../context/MapContext';
+import logo from '../assets/logo.png';
 
 export default function SearchBar({ onMenuClick }) {
     const { 
@@ -87,7 +88,13 @@ export default function SearchBar({ onMenuClick }) {
                 <span className="material-symbols-outlined text-slate-600">menu</span>
             </button>
             <div className="flex-1 flex items-center min-w-0">
-                <span className="hidden sm:inline text-primary font-manrope font-extrabold mr-3 whitespace-nowrap">IIT Patna</span>
+                <button 
+                  onClick={() => window.location.href = '/'} 
+                  className="hidden sm:flex items-center shrink-0 hover:scale-[1.02] active:scale-95 transition-transform"
+                  title="Reset to Home"
+                >
+                    <img src={logo} alt="IITP PathFinder" className="h-8 mr-3 object-contain cursor-pointer" />
+                </button>
                 <input 
                     className="w-full bg-transparent border-none focus:ring-0 text-sm font-body placeholder-slate-500 outline-none" 
                     placeholder="Search academic blocks, rooms, cities..." 
@@ -100,14 +107,6 @@ export default function SearchBar({ onMenuClick }) {
             <div className="flex items-center gap-1 shrink-0">
                 <button className="p-2 text-slate-500 hover:text-primary transition-colors">
                     <span className="material-symbols-outlined">search</span>
-                </button>
-                <div className="w-px h-6 bg-slate-200 mx-1"></div>
-                <button className="p-1 rounded-full overflow-hidden w-8 h-8 hover:ring-2 hover:ring-primary/20 transition-all">
-                    <img 
-                        alt="User profile" 
-                        className="w-full h-full object-cover" 
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdEHif9IajbMxC5s12iiA6dAiMhxYHfrareXJTGO9O2WcKuhcV_Dzqusq4h26HvEp1jcRn4DVWx3eOBCR0OKkC5SQbjG_d_LU2gZ78T4TAF6bw9qPom1Wg34hlh7jB9TCfu0sMtSP7BDkiN-bmJOUePG7DdHhRoig510cOvmSnE_jTDWv1UADjb4N8gzHBUCiAFO0UPrlXCXtU_F7ixZboKz-9JlKj592Q-7omPtTv92FzV-RSIIBx8oYFdY0ETxcHe_FX98FL7Do"
-                    />
                 </button>
             </div>
 

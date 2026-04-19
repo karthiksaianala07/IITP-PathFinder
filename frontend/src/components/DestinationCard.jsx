@@ -9,7 +9,9 @@ export default function DestinationCard() {
         activeRouteIndex, setActiveRouteIndex,
         startLocation, setStartLocation,
         locations, activeInput, setActiveInput,
-        isTracking, setIsTracking
+        isTracking, setIsTracking,
+        savedPlaces, toggleSavedPlace,
+        setActiveCategory
     } = useMapContext();
 
     const [isNavMode, setIsNavMode] = useState(false);
@@ -153,7 +155,7 @@ export default function DestinationCard() {
 
     if (isNavMode) {
         return (
-            <div className="absolute top-4 left-4 right-4 sm:left-6 sm:max-w-md pointer-events-auto z-[1000]">
+            <div className="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-md pointer-events-auto z-[1000]">
                 <div className="glass-panel p-5 rounded-3xl shadow-2xl border border-white/40 overflow-visible relative">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-extrabold text-primary font-manrope">Navigation Details</h2>
@@ -300,12 +302,23 @@ export default function DestinationCard() {
                             <span className="text-xs text-slate-500 font-body">{targetDestination.hint}</span>
                         </div>
                     </div>
-                    <button onClick={handleClose} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors flex shrink-0 ml-2">
-                        <span className="material-symbols-outlined text-slate-600">close</span>
-                    </button>
+                    <div className="flex items-center gap-1 shrink-0 ml-2">
+                        <button 
+                            onClick={() => toggleSavedPlace(targetDestination)}
+                            className={`p-2 rounded-full transition-colors flex ${savedPlaces.find(p => p.name === targetDestination.name) ? 'text-yellow-500 bg-yellow-50' : 'bg-slate-100 hover:bg-slate-200 text-slate-400'}`}
+                            title={savedPlaces.find(p => p.name === targetDestination.name) ? "Remove from Saved" : "Save Place"}
+                        >
+                            <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: savedPlaces.find(p => p.name === targetDestination.name) ? "'FILL' 1" : "'FILL' 0" }}>
+                                star
+                            </span>
+                        </button>
+                        <button onClick={handleClose} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors flex shrink-0">
+                            <span className="material-symbols-outlined text-slate-600">close</span>
+                        </button>
+                    </div>
                 </div>
                 <div className="flex gap-2">
-                    <button onClick={() => setIsNavMode(true)} className="flex-1 bg-primary text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    <button onClick={() => { setIsNavMode(true); setActiveCategory(null); }} className="flex-1 bg-primary text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
                         <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>directions</span>
                         Directions
                     </button>

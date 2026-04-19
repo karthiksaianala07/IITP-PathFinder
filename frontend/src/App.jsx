@@ -1,41 +1,47 @@
-import React, { useState } from 'react';
-import SearchBar from './components/SearchBar';
-import CategoryChips from './components/CategoryChips';
-import ActiveMarker from './components/ActiveMarker';
-import DestinationCard from './components/DestinationCard';
-import EventsPanel from './components/EventsPanel';
-import MapControls from './components/MapControls';
-import NavigationDrawer from './components/NavigationDrawer';
-import InteractiveMap from './components/InteractiveMap';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import Home from './pages/Home';
+import LoginPage from './pages/LoginPage';
+import AdminDashboard from './pages/AdminDashboard';
+
+// Helper to protect admin routes
+function ProtectedRoute({ children }) {
+  const { user, isAdmin, loading } = useAuth();
+  
+  if (loading) return (
+    <div className="h-screen w-screen flex items-center justify-center bg-slate-50">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+
+  if (!user || !isAdmin) return <Navigate to="/login" />;
+  return children;
+}
 
 function App() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
   return (
-    <>
-      {/* Interactive Map Background */}
-      <InteractiveMap />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public Map View */}
+          <Route path="/" element={<Home />} />
+          
+          {/* Admin Access Point */}
+          <Route path="/login" element={<LoginPage />} />
+          
+          {/* Protected Management Dashboard */}
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
 
-      {/* UI Overlay Layer */}
-      <div className="relative z-10 h-full w-full pointer-events-none p-4 md:p-6">
-        {/* Top Left Section: Search & Categories */}
-        <div className="flex flex-col gap-4 max-w-md w-full">
-          <SearchBar onMenuClick={() => setIsDrawerOpen(true)} />
-          <CategoryChips />
-        </div>
-
-        {/* Overlays */}
-        <DestinationCard />
-        <EventsPanel />
-        <MapControls />
-      </div>
-
-      {/* Navigation Drawer */}
-      <NavigationDrawer 
-        isOpen={isDrawerOpen} 
-        onClose={() => setIsDrawerOpen(false)} 
-      />
-    </>
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

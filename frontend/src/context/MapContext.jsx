@@ -24,6 +24,54 @@ export function MapProvider({ children }) {
     const [activeInput, setActiveInput] = useState('none');
     const [locations, setLocations] = useState([]); // Database fetch
 
+    // Phase 7: Persistence & Settings
+    const [savedPlaces, setSavedPlaces] = useState(() => {
+        const saved = localStorage.getItem('iitp_saved_places');
+        return saved ? JSON.parse(saved) : [];
+    });
+    
+    const [recentHistory, setRecentHistory] = useState(() => {
+        const saved = localStorage.getItem('iitp_recent_history');
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const [appSettings, setAppSettings] = useState(() => {
+        const saved = localStorage.getItem('iitp_settings');
+        return saved ? JSON.parse(saved) : { darkMode: false, defaultMode: 'driving-car' };
+    });
+
+    useEffect(() => {
+        localStorage.setItem('iitp_saved_places', JSON.stringify(savedPlaces));
+    }, [savedPlaces]);
+
+    useEffect(() => {
+        localStorage.setItem('iitp_recent_history', JSON.stringify(recentHistory));
+    }, [recentHistory]);
+
+    useEffect(() => {
+        localStorage.setItem('iitp_settings', JSON.stringify(appSettings));
+        if (appSettings.darkMode) document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
+    }, [appSettings]);
+
+    // Handle adding to history on destination change
+    useEffect(() => {
+        if (targetDestination) {
+            setRecentHistory(prev => {
+                const filtered = prev.filter(p => p.name !== targetDestination.name);
+                return [targetDestination, ...filtered].slice(0, 10);
+            });
+        }
+    }, [targetDestination]);
+
+    const toggleSavedPlace = (place) => {
+        setSavedPlaces(prev => {
+            const exists = prev.find(p => p.name === place.name);
+            if (exists) return prev.filter(p => p.name !== place.name);
+            return [...prev, place];
+        });
+    };
+
     useEffect(() => {
         const fetchLocations = async () => {
             try {
@@ -50,7 +98,10 @@ export function MapProvider({ children }) {
         routeData, setRouteData,
         activeRouteIndex, setActiveRouteIndex,
         activeInput, setActiveInput,
-        locations, setLocations
+        locations, setLocations,
+        savedPlaces, toggleSavedPlace,
+        recentHistory,
+        appSettings, setAppSettings
     };
 
     return (
