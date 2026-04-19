@@ -133,11 +133,15 @@ app.get('/api/route', async (req, res) => {
 });
 
 // Serve frontend static files in Production
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+const distPath = path.join(__dirname, '../frontend/dist');
+console.log(`[Production] Static files path: ${distPath}`);
+app.use(express.static(distPath));
 
 // SPA Wildcard fallback to let React Router (if any) or basic index handle direct URL access
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+    const indexPath = path.join(distPath, 'index.html');
+    console.log(`[Production] Serving SPA fallback: ${indexPath}`);
+    res.sendFile(indexPath);
 });
 
 app.listen(PORT, () => {
