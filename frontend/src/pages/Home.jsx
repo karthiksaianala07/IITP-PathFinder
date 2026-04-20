@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import CategoryChips from '../components/CategoryChips';
 import DestinationCard from '../components/DestinationCard';
-import EventsPanel from '../components/EventsPanel';
 import MapControls from '../components/MapControls';
 import NavigationDrawer from '../components/NavigationDrawer';
 import InteractiveMap from '../components/InteractiveMap';
@@ -27,7 +26,6 @@ export default function Home() {
 
         {/* Overlays */}
         <DestinationCard />
-        <EventsPanel />
         <MapControls />
       </div>
 

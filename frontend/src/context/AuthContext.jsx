@@ -53,6 +53,7 @@ export function AuthProvider({ children }) {
         isAdmin: profile?.is_admin === true,
         loading,
         signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),
+        signInWithSocial: (provider) => supabase.auth.signInWithOAuth({ provider }),
         signOut: () => supabase.auth.signOut(),
     };
 

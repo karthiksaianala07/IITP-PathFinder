@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMapContext } from '../context/MapContext';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
 export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
@@ -9,6 +11,9 @@ export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
         setTargetDestination, setRouteData, setActiveInput,
         toggleSavedPlace
     } = useMapContext();
+    
+    const { user, signOut } = useAuth();
+    const navigate = useNavigate();
     
     const [expandedSection, setExpandedSection] = useState(null); // 'saved' or 'history'
     const [downloadProgress, setDownloadProgress] = useState(null);
@@ -90,63 +95,74 @@ export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
                 </div>
 
                 <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar">
-                    {/* Saved Places */}
-                    <div>
-                        <button 
-                            onClick={() => setExpandedSection(expandedSection === 'saved' ? null : 'saved')}
-                            className="w-full flex items-center px-4 py-3 gap-4 text-slate-700 font-bold hover:bg-slate-50 rounded-xl transition-colors"
-                        >
-                            <span className="material-symbols-outlined text-yellow-500">bookmark</span>
-                            <span className="flex-1 text-left">Saved Places</span>
-                            <span className="text-xs text-slate-400 font-medium">{savedPlaces.length}</span>
-                        </button>
-                        {expandedSection === 'saved' && (
-                            <div className="mt-1 ml-10 space-y-1 animate-in slide-in-from-top-2 duration-300">
-                                {savedPlaces.length > 0 ? savedPlaces.map((p, i) => (
-                                    <div key={i} className="flex items-center justify-between group">
-                                        <button 
-                                            onClick={() => handleSelectPlace(p)}
-                                            className="text-sm text-slate-500 hover:text-primary transition-colors py-1 truncate flex-1 text-left"
-                                        >
-                                            {p.name}
-                                        </button>
-                                        <button onClick={() => toggleSavedPlace(p)} className="p-1 opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-400">
-                                            <span className="material-symbols-outlined text-xs">close</span>
-                                        </button>
+                    {user ? (
+                        <>
+                            {/* Saved Places */}
+                            <div>
+                                <button 
+                                    onClick={() => setExpandedSection(expandedSection === 'saved' ? null : 'saved')}
+                                    className="w-full flex items-center px-4 py-3 gap-4 text-slate-700 font-bold hover:bg-slate-50 rounded-xl transition-colors"
+                                >
+                                    <span className="material-symbols-outlined text-yellow-500">bookmark</span>
+                                    <span className="flex-1 text-left">Saved Places</span>
+                                    <span className="text-xs text-slate-400 font-medium">{savedPlaces.length}</span>
+                                </button>
+                                {expandedSection === 'saved' && (
+                                    <div className="mt-1 ml-10 space-y-1 animate-in slide-in-from-top-2 duration-300">
+                                        {savedPlaces.length > 0 ? savedPlaces.map((p, i) => (
+                                            <div key={i} className="flex items-center justify-between group">
+                                                <button 
+                                                    onClick={() => handleSelectPlace(p)}
+                                                    className="text-sm text-slate-500 hover:text-primary transition-colors py-1 truncate flex-1 text-left"
+                                                >
+                                                    {p.name}
+                                                </button>
+                                                <button onClick={() => toggleSavedPlace(p)} className="p-1 opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-400">
+                                                    <span className="material-symbols-outlined text-xs">close</span>
+                                                </button>
+                                            </div>
+                                        )) : <div className="text-[10px] text-slate-400 italic py-2">No saved places yet.</div>}
                                     </div>
-                                )) : <div className="text-[10px] text-slate-400 italic py-2">No saved places yet.</div>}
+                                )}
                             </div>
-                        )}
-                    </div>
 
-                    {/* Recent History */}
-                    <div>
-                        <button 
-                            onClick={() => setExpandedSection(expandedSection === 'history' ? null : 'history')}
-                            className="w-full flex items-center px-4 py-3 gap-4 text-slate-700 font-bold hover:bg-slate-50 rounded-xl transition-colors"
-                        >
-                            <span className="material-symbols-outlined text-blue-500">history</span>
-                            <span className="flex-1 text-left">Recent History</span>
-                        </button>
-                        {expandedSection === 'history' && (
-                            <div className="mt-1 ml-10 space-y-2 animate-in slide-in-from-top-2 duration-300">
-                                {recentHistory.length > 0 ? recentHistory.map((h, i) => (
-                                    <button 
-                                        key={i} 
-                                        onClick={() => handleSelectPlace(h)}
-                                        className="w-full text-left text-sm text-slate-500 hover:text-primary transition-colors py-1 truncate block"
-                                    >
-                                        {h.name}
-                                    </button>
-                                )) : <div className="text-[10px] text-slate-400 italic py-2">History is empty.</div>}
+                            {/* Recent History */}
+                            <div>
+                                <button 
+                                    onClick={() => setExpandedSection(expandedSection === 'history' ? null : 'history')}
+                                    className="w-full flex items-center px-4 py-3 gap-4 text-slate-700 font-bold hover:bg-slate-50 rounded-xl transition-colors"
+                                >
+                                    <span className="material-symbols-outlined text-blue-500">history</span>
+                                    <span className="flex-1 text-left">Recent History</span>
+                                </button>
+                                {expandedSection === 'history' && (
+                                    <div className="mt-1 ml-10 space-y-2 animate-in slide-in-from-top-2 duration-300">
+                                        {recentHistory.length > 0 ? recentHistory.map((h, i) => (
+                                            <button 
+                                                key={i} 
+                                                onClick={() => handleSelectPlace(h)}
+                                                className="w-full text-left text-sm text-slate-500 hover:text-primary transition-colors py-1 truncate block"
+                                            >
+                                                {h.name}
+                                            </button>
+                                        )) : <div className="text-[10px] text-slate-400 italic py-2">History is empty.</div>}
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
+                        </>
+                    ) : (
+                        <div className="bg-slate-50 p-4 rounded-2xl mb-4 border border-slate-100">
+                            <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Personalization</h5>
+                            <p className="text-[10px] text-slate-500 mb-3 leading-relaxed">Log in to save your favorite spots and view your navigation history across devices.</p>
+                            <button 
+                                onClick={() => { onClose(); navigate('/login'); }}
+                                className="w-full py-2 bg-white text-primary text-xs font-bold rounded-lg border border-primary/20 hover:bg-primary hover:text-white transition-all shadow-sm"
+                            >
+                                Sign In to Sync
+                            </button>
+                        </div>
+                    )}
 
-                    <a className="flex items-center px-4 py-3 gap-4 text-slate-700 font-bold hover:bg-slate-50 rounded-xl transition-colors" href="#">
-                        <span className="material-symbols-outlined text-purple-500">event</span>
-                        <span>All Events</span>
-                    </a>
                     <div className="h-px bg-slate-100 my-4"></div>
                     <button 
                         onClick={() => {
@@ -158,9 +174,12 @@ export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
                         <span className="material-symbols-outlined text-slate-400">settings</span>
                         <span>Settings</span>
                     </button>
-                    <button className="w-full flex items-center px-4 py-3 gap-4 text-slate-700 font-bold hover:bg-slate-50 rounded-xl transition-colors">
-                        <span className="material-symbols-outlined text-slate-400">code</span>
-                        <span>Developer Details</span>
+                    <button 
+                        onClick={user ? () => { signOut(); onClose(); } : () => { onClose(); navigate('/login'); }}
+                        className={`w-full flex items-center px-4 py-3 gap-4 font-bold rounded-xl transition-colors mt-2 ${user ? 'text-red-500 hover:bg-red-50' : 'text-primary hover:bg-primary/5'}`}
+                    >
+                        <span className="material-symbols-outlined">{user ? 'logout' : 'login'}</span>
+                        <span>{user ? 'Sign Out' : 'Sign In'}</span>
                     </button>
                 </nav>
 
@@ -176,6 +195,12 @@ export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
                             {downloadProgress || "Download (12 MB)"}
                         </button>
                     </div>
+                    
+                    {/* Passive Footer Link */}
+                    <button className="w-full flex items-center justify-center gap-2 mt-4 text-[10px] text-slate-400 hover:text-primary transition-colors font-medium group">
+                        <span className="material-symbols-outlined text-sm opacity-60 group-hover:opacity-100 transition-opacity">code</span>
+                        <span>Developer Details</span>
+                    </button>
                 </div>
             </div>
         </div>
