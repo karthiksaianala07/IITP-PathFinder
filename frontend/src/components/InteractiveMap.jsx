@@ -126,7 +126,8 @@ export default function InteractiveMap() {
         <div className="fixed inset-0 z-0">
             <MapContainer
                 center={center}
-                zoom={15}
+                zoom={14.5}
+                zoomSnap={0.5}
                 style={{ height: '100%', width: '100%', zIndex: 0 }}
                 zoomControl={false}
             >

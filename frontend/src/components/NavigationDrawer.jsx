@@ -3,6 +3,7 @@ import { useMapContext } from '../context/MapContext';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import DeveloperModal from './DeveloperModal';
 
 export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
     const drawerRef = useRef(null);
@@ -17,6 +18,7 @@ export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
     
     const [expandedSection, setExpandedSection] = useState(null); // 'saved' or 'history'
     const [downloadProgress, setDownloadProgress] = useState(null);
+    const [isDevModalOpen, setIsDevModalOpen] = useState(false);
 
     // Close on clicking outside drawer
     useEffect(() => {
@@ -197,12 +199,20 @@ export default function NavigationDrawer({ isOpen, onClose, onSettingsClick }) {
                     </div>
                     
                     {/* Passive Footer Link */}
-                    <button className="w-full flex items-center justify-center gap-2 mt-4 text-[10px] text-slate-400 hover:text-primary transition-colors font-medium group">
+                    <button 
+                        onClick={() => setIsDevModalOpen(true)}
+                        className="w-full flex items-center justify-center gap-2 mt-4 text-[10px] text-slate-400 hover:text-primary transition-colors font-medium group"
+                    >
                         <span className="material-symbols-outlined text-sm opacity-60 group-hover:opacity-100 transition-opacity">code</span>
                         <span>Developer Details</span>
                     </button>
                 </div>
             </div>
+
+            <DeveloperModal 
+                isOpen={isDevModalOpen} 
+                onClose={() => setIsDevModalOpen(false)} 
+            />
         </div>
     );
 }
