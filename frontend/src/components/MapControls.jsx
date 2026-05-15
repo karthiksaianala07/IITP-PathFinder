@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMapContext } from '../context/MapContext';
 
 export default function MapControls() {
-    const { mapInstance, isTracking, setIsTracking } = useMapContext();
+    const { mapInstance, isTracking, setIsTracking, mapStyle, setMapStyle } = useMapContext();
+    const [showLayers, setShowLayers] = useState(false);
 
     const handleZoomIn = () => {
         if (mapInstance) mapInstance.zoomIn();
@@ -18,10 +19,37 @@ export default function MapControls() {
 
     return (
         <div className="absolute bottom-6 right-6 flex flex-col gap-3 pointer-events-auto">
-            {/* Layers Button */}
-            <button className="w-12 h-12 glass-panel rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-white transition-all ring-1 ring-black/5">
-                <span className="material-symbols-outlined">layers</span>
-            </button>
+            {/* Layers Button & Popover */}
+            <div className="relative flex justify-end">
+                {showLayers && (
+                    <div className="absolute bottom-14 right-0 flex flex-col gap-2 p-2 glass-panel rounded-2xl shadow-xl animate-in zoom-in-95 duration-200 z-10 w-36 border border-white/40">
+                        <button 
+                            onClick={() => { setMapStyle('light'); setShowLayers(false); }} 
+                            className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-all ${mapStyle === 'light' ? 'bg-primary text-white shadow-md' : 'hover:bg-primary/10 text-slate-700'}`}
+                        >
+                            <span className="material-symbols-outlined text-[18px]">light_mode</span> Light
+                        </button>
+                        <button 
+                            onClick={() => { setMapStyle('dark'); setShowLayers(false); }} 
+                            className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-all ${mapStyle === 'dark' ? 'bg-primary text-white shadow-md' : 'hover:bg-primary/10 text-slate-700'}`}
+                        >
+                            <span className="material-symbols-outlined text-[18px]">dark_mode</span> Dark
+                        </button>
+                        <button 
+                            onClick={() => { setMapStyle('satellite'); setShowLayers(false); }} 
+                            className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold transition-all ${mapStyle === 'satellite' ? 'bg-primary text-white shadow-md' : 'hover:bg-primary/10 text-slate-700'}`}
+                        >
+                            <span className="material-symbols-outlined text-[18px]">satellite_alt</span> Satellite
+                        </button>
+                    </div>
+                )}
+                <button 
+                    onClick={() => setShowLayers(!showLayers)}
+                    className={`w-12 h-12 glass-panel rounded-full shadow-lg flex items-center justify-center transition-all ring-1 ring-black/5 ${showLayers ? 'bg-primary text-white' : 'text-primary hover:bg-white'}`}
+                >
+                    <span className="material-symbols-outlined">layers</span>
+                </button>
+            </div>
             
             {/* My Location Button (Toggles Tracking Mode) */}
             <button 

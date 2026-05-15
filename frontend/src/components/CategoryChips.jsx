@@ -1,24 +1,39 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useMapContext } from '../context/MapContext';
 
 export default function CategoryChips() {
-    const { 
-        activeCategory, setActiveCategory, 
+    const {
+        activeCategory, setActiveCategory,
         locations, setTargetDestination,
         setRouteData, setActiveInput
     } = useMapContext();
 
     const categories = [
         { id: 'academic', icon: 'account_balance', label: 'Academic' },
-        { id: 'hostels', icon: 'hotel', label: 'Hostels' },
-        { id: 'dining', icon: 'restaurant', label: 'Dining' },
-        { id: 'library', icon: 'local_library', label: 'Library' }
+        { id: 'hostel', icon: 'hotel', label: 'Hostels' },
+        { id: 'dinning', icon: 'restaurant', label: 'Dining' },
+        { id: 'library', icon: 'local_library', label: 'Library' },
+        { id: 'sports', icon: 'sports_soccer', label: 'Sports' },
+        { id: 'parking', icon: 'local_parking', label: 'Parking' },
+        { id: 'administration', icon: 'admin_panel_settings', label: 'Administration' }
     ];
 
     // Filter results matching the active category
-    const filteredLocations = activeCategory 
+    const filteredLocations = activeCategory
         ? locations.filter(loc => loc.category.toLowerCase() === activeCategory.toLowerCase())
         : [];
+
+    const scrollRef = useRef(null);
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const scrollAmount = 200;
+            scrollRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     const toggleCategory = (catId) => {
         // Deselect if already active, otherwise select
@@ -38,26 +53,45 @@ export default function CategoryChips() {
 
     return (
         <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-top-4 duration-500">
-            {/* Horizontal Chips Row */}
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide no-scrollbar pointer-events-auto">
-                {categories.map((cat) => (
-                    <button 
-                        key={cat.id}
-                        onClick={() => toggleCategory(cat.id)}
-                        className={`flex items-center gap-2 px-4 py-2.5 rounded-full shadow-lg border transition-all duration-300 whitespace-nowrap active:scale-95
-                            ${activeCategory === cat.id 
-                                ? 'bg-primary text-white border-primary ring-4 ring-primary/10' 
-                                : 'bg-white/80 backdrop-blur-md border-white/50 hover:bg-white text-slate-700 hover:border-primary/30'
-                            }`}
-                    >
-                        <span className={`material-symbols-outlined text-[18px] ${activeCategory === cat.id ? 'text-white' : 'text-primary'}`}>
-                            {cat.icon}
-                        </span>
-                        <span className="text-xs font-black tracking-tight uppercase">
-                            {cat.label}
-                        </span>
-                    </button>
-                ))}
+            {/* Horizontal Chips Row Container */}
+            <div className="relative flex items-center w-full pointer-events-auto group">
+                {/* Left Scroll Button */}
+                <button
+                    onClick={() => scroll('left')}
+                    className="absolute left-0 z-10 w-8 h-8 flex items-center justify-center bg-white/90 backdrop-blur-md rounded-full shadow-md text-primary hover:bg-white border border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity -ml-3"
+                >
+                    <span className="material-symbols-outlined text-[20px]">chevron_left</span>
+                </button>
+
+                {/* Chips Container */}
+                <div ref={scrollRef} className="flex gap-2 overflow-x-auto py-2 scrollbar-hide no-scrollbar w-full scroll-smooth px-2">
+                    {categories.map((cat) => (
+                        <button
+                            key={cat.id}
+                            onClick={() => toggleCategory(cat.id)}
+                            className={`flex items-center gap-2 px-4 py-2.5 rounded-full shadow-lg border transition-all duration-300 whitespace-nowrap active:scale-95
+                                ${activeCategory === cat.id
+                                    ? 'bg-primary text-white border-primary ring-4 ring-primary/10'
+                                    : 'bg-white/80 backdrop-blur-md border-white/50 hover:bg-white text-slate-700 hover:border-primary/30'
+                                }`}
+                        >
+                            <span className={`material-symbols-outlined text-[18px] ${activeCategory === cat.id ? 'text-white' : 'text-primary'}`}>
+                                {cat.icon}
+                            </span>
+                            <span className="text-xs font-black tracking-tight uppercase">
+                                {cat.label}
+                            </span>
+                        </button>
+                    ))}
+                </div>
+
+                {/* Right Scroll Button */}
+                <button
+                    onClick={() => scroll('right')}
+                    className="absolute right-0 z-10 w-8 h-8 flex items-center justify-center bg-white/90 backdrop-blur-md rounded-full shadow-md text-primary hover:bg-white border border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity -mr-3"
+                >
+                    <span className="material-symbols-outlined text-[20px]">chevron_right</span>
+                </button>
             </div>
 
             {/* Vertical Results List (Appears when category is active) */}
@@ -71,7 +105,7 @@ export default function CategoryChips() {
                             </div>
                             <div className="flex flex-col gap-1 mt-1">
                                 {filteredLocations.map((loc) => (
-                                    <div 
+                                    <div
                                         key={loc.id}
                                         onClick={() => handleSelectLocation(loc)}
                                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-primary/5 cursor-pointer transition-all group active:scale-[0.98]"

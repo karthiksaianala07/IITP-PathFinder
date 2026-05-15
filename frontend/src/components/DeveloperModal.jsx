@@ -2,13 +2,14 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import kundanImage from '../assets/kundan_sahani.jpeg';
 import aksImage from '../assets/AKS.jpg';
+import yashImage from '../assets/yash_sahaswani.jpeg';
+import krishnaImage from '../assets/krishna_sahani.jpeg';
 
 const TEAM = [
     { name: "Kundan Sahani", id: 1, image: kundanImage },
     { name: "AKS", id: 2, image: aksImage },
-    { name: "Team Member 3", id: 3 },
-    { name: "Team Member 4", id: 4 },
-    { name: "Team Member 5", id: 5 },
+    { name: "YASH", id: 3, image: yashImage },
+    { name: "Krishna Sahani", id: 4, image: krishnaImage }
 ];
 
 export default function DeveloperModal({ isOpen, onClose }) {
@@ -38,22 +39,10 @@ export default function DeveloperModal({ isOpen, onClose }) {
                     <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">The Development Team</h2>
                 </div>
 
-                <div className="space-y-10">
-                    {/* Top Row: 3 People */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12">
-                        {TEAM.slice(0, 3).map((dev) => (
-                            <DevCard key={dev.id} dev={dev} />
-                        ))}
-                    </div>
-
-                    {/* Bottom Row: 2 People (Centered) */}
-                    <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-                        {TEAM.slice(3, 5).map((dev) => (
-                            <div key={dev.id} className="w-full sm:w-[calc(33.33%-1rem)] md:w-[calc(33.33%-2rem)]">
-                                <DevCard dev={dev} />
-                            </div>
-                        ))}
-                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 max-w-3xl mx-auto">
+                    {TEAM.map((dev) => (
+                        <DevCard key={dev.id} dev={dev} />
+                    ))}
                 </div>
             </div>
         </div>
@@ -65,8 +54,8 @@ export default function DeveloperModal({ isOpen, onClose }) {
 function DevCard({ dev }) {
     return (
         <div className="flex flex-col items-center group">
-            <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-[2rem] bg-gradient-to-br from-white/20 to-white/5 border border-white/30 p-1 mb-4 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.3)] group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]">
-                <div className="w-full h-full rounded-[1.6rem] bg-white/5 flex items-center justify-center overflow-hidden">
+            <div className="relative w-36 h-36 md:w-48 md:h-48 rounded-[2.5rem] bg-gradient-to-br from-white/20 to-white/5 border border-white/30 p-1 mb-4 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.3)] group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]">
+                <div className="w-full h-full rounded-[2.2rem] bg-white/5 flex items-center justify-center overflow-hidden">
                     {dev.image ? (
                         <img src={dev.image} alt={dev.name} className="w-full h-full object-cover" />
                     ) : (

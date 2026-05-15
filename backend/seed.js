@@ -2,19 +2,10 @@ import fs from 'fs';
 import csv from 'csv-parser';
 import { supabase } from './supabaseClient.js';
 
-const determineCategory = (name) => {
-    const lowerName = name.toLowerCase();
-    if (lowerName.includes('hostel')) return 'hostels';
-    if (lowerName.includes('dining') || lowerName.includes('mess') || lowerName.includes('nescafe') || lowerName.includes('food')) return 'dining';
-    if (lowerName.includes('library')) return 'library';
-    if (lowerName.includes('department') || lowerName.includes('block') || lowerName.includes('lab') || lowerName.includes('academic') || lowerName.includes('lecture') || lowerName.includes('tutorial')) return 'academic';
-    
-    return 'other'; // default bucket
-};
 
 const seedDatabase = async () => {
     const results = [];
-    const csvFilePath = '../../capstone project.csv'; // Relative to backend/
+    const csvFilePath = '../locations.csv'; // Relative to backend/
 
     fs.createReadStream(csvFilePath)
         .pipe(csv())
@@ -23,21 +14,34 @@ const seedDatabase = async () => {
             const name = data.location ? data.location.trim() : null;
             const lat = parseFloat(data.latitude);
             const lng = parseFloat(data.longitude);
+            const category = data.category ? data.category.trim().toLowerCase() : 'other';
             
             if (name && !isNaN(lat) && !isNaN(lng)) {
                 results.push({
                     name: name,
                     lat: lat,
                     lng: lng,
-                    category: determineCategory(name)
+                    category: category
                 });
             }
         })
         .on('end', async () => {
             console.log(`Parsed ${results.length} valid locations from CSV.`);
             
+            // Delete all previous data
+            console.log('Wiping existing data from locations table...');
+            const { error: deleteError } = await supabase
+                .from('locations')
+                .delete()
+                .neq('id', '00000000-0000-0000-0000-000000000000'); // Deletes all rows
+
+            if (deleteError) {
+                console.error("Error wiping data:", deleteError.message);
+                return;
+            }
+            
             // Insert into Supabase
-            console.log('Pushing to Supabase...');
+            console.log('Pushing new data to Supabase...');
             const { data, error } = await supabase
                 .from('locations')
                 .insert(results);

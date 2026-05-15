@@ -24,6 +24,9 @@ export function MapProvider({ children }) {
     const [activeInput, setActiveInput] = useState('none');
     const [locations, setLocations] = useState([]); // Database fetch
 
+    // Map Styling
+    const [mapStyle, setMapStyle] = useState('light'); // light, dark, satellite
+
     // Phase 7: Persistence & Settings
     const [savedPlaces, setSavedPlaces] = useState(() => {
         const saved = localStorage.getItem('iitp_saved_places');
@@ -99,6 +102,7 @@ export function MapProvider({ children }) {
         activeRouteIndex, setActiveRouteIndex,
         activeInput, setActiveInput,
         locations, setLocations,
+        mapStyle, setMapStyle,
         savedPlaces, toggleSavedPlace,
         recentHistory,
         appSettings, setAppSettings

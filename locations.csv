@@ -1,0 +1,85 @@
+location,latitude,longitude,category,description
+IIT Patna Gate 1,25.5334895,84.8556477,OTHER,Most used entrance for IIT
+Central Lecture Hall,25.5332824,84.8514522,ACADEMIC,For classes and discussion
+IIT Patna Temple (Gyaneshwar Mahadev),25.5332354,84.8543659,OTHER,
+"Academic Circle, IITP",25.5344018,84.8538948,OTHER,
+Inclubation Centre IIT Patna,25.5361778,84.8544043,ACADEMIC,Startup Ideas and Internships
+W.C. Near SAC,25.5371017,84.8510549,OTHER,nill
+Canara Bank,25.536786,84.8511081,OTHER,Bank
+W.C. near SAC,25.5370762,84.8506667,OTHER,nill
+Open Air Theatre (OAT),25.5367992,84.8506171,OTHER,For Unofficial events
+Food Court,25.5370877,84.8512554,DINNING,Snacks and Fast-food Corner
+India Post Office,25.5368472,84.8513569,OTHER,Post Office
+Central Library,25.5361424,84.8502516,LIBRARY,For Peacefull study enviourment
+Buddha Circle,25.5375482,84.8498173,OTHER,Rotatory Intersection
+Hair Salon ,25.5390371,84.8502393,OTHER,Salon for Mens
+Canara Bank,25.5389568,84.8502059,OTHER,Bank
+"Volleyball Court, IITP",25.5392539,84.8501804,SPORTS,This court is always available
+"Tennis Court, IITP",25.5395806,84.8501708,SPORTS,Tennis court near hostel
+"Volleyball Court-2, IITP",25.5399317,84.8501433,SPORTS,Always engaged with players 
+"Basketball Court, IITP",25.5402912,84.8501238,SPORTS,Often captivated with few players 
+Nescafe,25.5406792,84.8504078,DINNING,Best for drinks after dinner
+Boys Hostel Road,25.5405425,84.8511836,HOSTEL,This lane connects many hostels
+"Gymkhana, IITP",25.5400016,84.849747,SPORTS,"Always hyped with competitive energy with its 3 Badminton courts, Table Tennis, GYM, etc. "
+Badminton Court,25.5402709,84.8497143,SPORTS,Indoor Badminton Court (Inside Gymkhana)
+APJ Abdul Kalam Boys Hostel,25.5411556,84.8509931,HOSTEL,Also known as Hostel 1
+Cycle Parking - Kalam Right Front ,25.5407187,84.8517569,PARKING,nill
+Cycle Parking - Kalam Left Front ,25.5413986,84.8517932,PARKING,nill
+Aryabhatta Hostel,25.5413101,84.8527921,HOSTEL,nill
+Aryabhatta Mess,25.5412487,84.8534301,HOSTEL,nill
+"Warden Office, CVR Hostel",25.5400912,84.8527281,OTHER,nill
+CV Raman Boys Hostel,25.53959,84.8519961,HOSTEL,nill
+Cycle Parking - Aryabhatta ,25.542444,84.8526063,PARKING,nill
+"Football Ground, IITP",25.5448168,84.8529947,SPORTS,Main and only footballground of IITP where official matches are conducted.
+"Cricket Ground, IITP",25.5451324,84.8547219,SPORTS,Main and only cricket ground of IITP where official matches are conducted.
+Main Tennis Court,25.5462256,84.8541218,SPORTS,Main tennis ground of IITP where official matches are conducted.
+Main Basketball Court,25.5465241,84.8542435,SPORTS,Main basketball court of IITP where official matches are conducted.
+"Volleyball Court 3, IITP",25.5453343,84.8538364,SPORTS,Main volleyball court  of IITP where official matches are conducted.
+Director's Bungalow ,25.5475553,84.8540026,OTHER,nill
+Hospital - IIT Patna,25.5497047,84.8538834,OTHER,Nursing and Aid Centre in IITP
+Fest Arena,25.5342757,84.8529602,OTHER,All fests of IITP is held at this area 
+"Nescafe 2, IITP",25.5339335,84.8511422,DINNING,Tea area near classes
+"Tutorial Block-9, IITP",25.5325382,84.8518681,ACADEMIC,Classes of B.tech-M.tech and M.sc are conducted here
+Foundation for Inovators,25.5325891,84.8514427,ACADEMIC,Invention of all things even related to college happen here 
+Turotorial Circle,25.5329397,84.8516928,OTHER,nill
+"Block 3, IITP",25.5340599,84.8515161,ACADEMIC,nill
+Electrical Engineering Department,25.5339379,84.851573,ACADEMIC,Electrical engineering main classes are held here
+Mechanical Engineering Department,25.5342248,84.8512527,ACADEMIC,Mechanical engineering main classes are held here
+Car Parking,25.5344269,84.8508434,PARKING,nill
+"Department of Civil Engineering, IITP",25.5338553,84.850841,ACADEMIC,Civil engineering main classes are held here
+"Block 6, IITP",25.5336133,84.8506346,ACADEMIC,nill
+"Polymer Processing Lab, MME, IITP",25.533588,84.8504408,ACADEMIC,Study
+Parking Space,25.5328048,84.8503317,PARKING,nill
+"Mechanical Engineering Workshop, IITP",25.5325947,84.8496917,ACADEMIC,Mechanical study praticals happen here
+"Civil Engineering Workshop, IITP",25.5323078,84.8496941,ACADEMIC,Civil study praticals happen here
+Chemical and Biochemical Engineering,25.5341032,84.848573,ACADEMIC,Chemical and Biochemical engineering main classes are held here
+"Department of Mathematics, IITP",25.5343463,84.8485979,ACADEMIC,Classes of Msc_Mtech and Btech mathematics classes are held here
+Chemical Process Development Laboratory,25.5338899,84.8487015,ACADEMIC,Chemistry praticals are held here 
+"Department of CSE, IITP",25.5348049,84.8477986,ACADEMIC,Computer praticalsare held here
+Substation 4,25.5354278,84.8489144,OTHER,nill
+Power Sub-Station 1,25.5350057,84.8493044,OTHER,nill
+Parking Space,25.5351503,84.8498335,PARKING,nill
+New Central Library,25.5362819,84.8503648,LIBRARY,Study
+"Senate Hall, IITP",25.5353635,84.8509546,OTHER,nill
+Bionic Hope Pvt.Ltd,25.5357706,84.8510045,OTHER,nill
+IIT Patna Administration Block,25.5358855,84.8512452,ADMINISTRATION,nill
+Administration Building ,25.5359845,84.8511008,ADMINISTRATION,nill
+"JEE Office, IIT Patna",25.5359411,84.8512542,ADMINISTRATION, JEE meetings are held here
+IIT Patna Library,25.5360684,84.8512352,LIBRARY,Study purpose as there is many books for reading also
+Training and Placement Cell IIT Patna,25.5362491,84.8513127,ADMINISTRATION,Internship drives and placement practices are held here
+Ashima Hostel (Girls hostel),25.5377144,84.8490483,HOSTEL,Only girls hostel
+Bus Stop - Ashima hostel,25.5381031,84.8494904,OTHER,Just outside Ashima hostel is the bus stop for students
+"Water Treatment Plant, IITP",25.5383673,84.8506226,OTHER,nill
+"Kendriya Vidyalaya, IIT Patna",25.5529796,84.8556877,ACADEMIC,Goverment school
+"Foundation Academy School, IIT Patna Campus",25.5519335,84.8554249,ACADEMIC,School inside iit patna
+"Children's Park, IIT patna ",25.5486133,84.8582267,OTHER,Park for children 
+Block B4,25.5488019,84.858661,OTHER,nill
+"B1 : Faculty Residence , IIT patna",25.5491792,84.8581302,OTHER,nill
+Block C1,25.551006,84.8592037,OTHER,nill
+IIT Patna Staff Residence (Block C2),25.5515634,84.8590883,OTHER,nill
+Captain Public School,25.5521987,84.8594614,ACADEMIC,nill
+IIT Hotel,25.5524253,84.8598484,DINNING,nill
+"Auditorium, IIT Patna",25.5354768,84.8530671,ADMINISTRATION,All big Inter-IIT Events and Fresher as well as Farewell are celebrated here
+"Clean Room IC, IITP",25.5363633,84.8538937,OTHER,nill
+NCC Limited,25.5340431,84.8457571,OTHER,nill
+Main gate 2 IITP,25.554786,84.8574333,OTHER,"The Second Gate of IIT Patna, Near Bihta Station"
